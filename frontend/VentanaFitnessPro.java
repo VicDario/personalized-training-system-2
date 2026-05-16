@@ -6,7 +6,7 @@ import java.awt.event.*;
 import backend.modelo.*;
 import backend.notificacion.*;
 
-// Ventana principal: muestra estadísticas de los ejercicios cargados desde la BD
+// Ventana principal: muestra stats de los ejercicios cargados desde la BD
 public class VentanaFitnessPro extends JFrame implements Suscriptor {
 
     // Labels actualizables con los datos reales del backend
@@ -33,7 +33,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         main.add(titulo, BorderLayout.NORTH);
 
-        // Inicializa los labels con guión mientras se carga la BD
+        // Inicializa los labels con guiones,  mientras se carga la real BD
         lblTotal        = new JLabel("—", JLabel.CENTER);
         lblTiempo       = new JLabel("—", JLabel.CENTER);
         lblCardio       = new JLabel("—", JLabel.CENTER);
@@ -41,7 +41,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         lblBasicoInter  = new JLabel("—", JLabel.CENTER);
         lblAvanzadoAlto = new JLabel("—", JLabel.CENTER);
 
-        // Grid de cards con las estadísticas
+        // Interfaz de Grid de cards con las estadísticas
         JPanel grid = new JPanel(new GridLayout(3, 2, 15, 15));
         grid.setBackground(new Color(15, 15, 25));
         grid.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -55,7 +55,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
 
         main.add(grid, BorderLayout.CENTER);
 
-        // Botón para iniciar la generación de rutina
+        // Boton para empezar a generar una rutina
         JButton iniciar = new JButton("INICIAR");
         iniciar.setBackground(new Color(255, 80, 80));
         iniciar.setForeground(Color.WHITE);
@@ -71,7 +71,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         setVisible(true);
     }
 
-    // Recibe y despacha los eventos del backend
+    // Recibe y manda los eventos del backend
     @Override
     public void actualizar(String evento, Object datos) {
         if (evento.equals(EventoSistema.CARGA_OK)) {
@@ -81,7 +81,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         }
     }
 
-    // Calcula las estadísticas y actualiza cada label del grid
+    // Calculo de stats y actualiza cada label del grid
     private void actualizarEstadisticas(Ejercicio[] ejercicios) {
         int tiempoTotal = 0, cardio = 0, fuerza = 0;
         int basico = 0, intermedio = 0, avanzado = 0, alto = 0;
@@ -106,7 +106,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         lblAvanzadoAlto.setText((avanzado + alto) + " ej.");
     }
 
-    // Construye una card con icono, valor actualizable y título
+    // Constructor de las cards
     private JPanel crearCard(String titulo, String icono, Color color, JLabel valorLabel) {
         JPanel card = new JPanel(new BorderLayout()) {
             protected void paintComponent(Graphics g) {
@@ -138,7 +138,7 @@ public class VentanaFitnessPro extends JFrame implements Suscriptor {
         card.add(centro, BorderLayout.CENTER);
         card.add(lblTitulo, BorderLayout.SOUTH);
 
-        // Efecto hover: aclara el color al pasar el mouse
+        // hover
         card.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 card.setBackground(color.brighter());

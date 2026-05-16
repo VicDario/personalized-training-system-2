@@ -38,7 +38,7 @@ public class Rutina {
         return total;
     }
 
-    // Cuenta cuántos ejercicios corresponden al tipo indicado
+    // Cuenta ejercicios que corresponden al TIPO indicado
     public int contarPorTipo(TipoEjercicio tipo) {
         int count = 0;
         for (int i = 0; i < cantidadEjercicios; i++) {
@@ -47,7 +47,7 @@ public class Rutina {
         return count;
     }
 
-    // Cuenta cuántos ejercicios corresponden al nivel indicado
+    // Cuenta ejercicios que corresponden al NIVEL indicado
     public int contarPorNivel(NivelIntensidad nivel) {
         int count = 0;
         for (int i = 0; i < cantidadEjercicios; i++) {
@@ -56,7 +56,7 @@ public class Rutina {
         return count;
     }
 
-    // Imprime el resumen consolidado de la rutina en consola
+    // print del resumen 
     public void mostrarInfo() {
         System.out.println("=== Resumen de rutina ===");
         System.out.println("Cliente: " + getCliente());

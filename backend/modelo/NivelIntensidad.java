@@ -4,7 +4,6 @@ package backend.modelo;
 public enum NivelIntensidad {
     BASICO, INTERMEDIO, AVANZADO, ALTO_RENDIMIENTO;
 
-    // Representación legible para la UI
     public String toString() {
         switch (this) {
             case BASICO:           return "Básico";

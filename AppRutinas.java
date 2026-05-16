@@ -8,7 +8,7 @@ public class AppRutinas {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new VentanaFitnessPro();
-            // Carga de ejercicios en hilo separado para no bloquear la UI
+            // Carga de ejercicios, se hace en hilo separado para no bloquear la UI
             new Thread(() -> new CargadorEjercicios().cargar()).start();
         });
     }

@@ -1,6 +1,6 @@
 package backend.excepciones;
 
-// Lanzada cuando un registro tiene campos obligatorios vacíos o nulos
+// Ocurre en caso de que un registro tiene campos obligatorios vacios, nulos.
 public class InformacionIncompletaException extends Exception {
 
     public InformacionIncompletaException(String mensaje) {
