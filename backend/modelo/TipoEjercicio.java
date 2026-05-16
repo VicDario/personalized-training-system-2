@@ -1,6 +1,6 @@
 package backend.modelo;
 
-// Clasificación de ejercicios por modalidad
+// Clasif. de ejercicios por modalidad
 public enum TipoEjercicio {
     CARDIOVASCULAR, FUERZA;
 

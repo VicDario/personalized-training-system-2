@@ -2,12 +2,12 @@ package backend.notificacion;
 
 import javax.swing.SwingUtilities;
 
-// Bus de eventos singleton: distribuye notificaciones a los suscriptores registrados
+// Distribuye notificaciones a los suscriptores registrados
 public class Notificador {
 
     private static final int MAX_SUSCRIPTORES = 10;
 
-    // Instancia única compartida por todo el sistema
+    // Instancia UNICA compartida por todo el sistema
     private static final Notificador INSTANCIA = new Notificador();
 
     private Suscriptor[] suscriptores;
@@ -20,7 +20,7 @@ public class Notificador {
 
     public static Notificador getInstancia() { return INSTANCIA; }
 
-    // Registra un suscriptor si hay espacio disponible
+    // Registra un suscriptor (si hay espacio disponible)
     public void suscribir(Suscriptor s) {
         if (cantidad < suscriptores.length) {
             suscriptores[cantidad] = s;
@@ -28,7 +28,7 @@ public class Notificador {
         }
     }
 
-    // Elimina un suscriptor y compacta el arreglo
+    // Elimina un suscriptor, luego, compacta el arreglo
     public void desuscribir(Suscriptor s) {
         for (int i = 0; i < cantidad; i++) {
             if (suscriptores[i] == s) {
@@ -42,7 +42,7 @@ public class Notificador {
         }
     }
 
-    // Envía el evento a todos los suscriptores en el hilo de Swing (EDT)
+    // Manda el evento a todos los suscriptores en el hilo de Swing (EDT)
     public void notificar(final String evento, final Object datos) {
         for (int i = 0; i < cantidad; i++) {
             final Suscriptor s = suscriptores[i];

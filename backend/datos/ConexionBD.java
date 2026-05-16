@@ -19,7 +19,7 @@ public class ConexionBD {
         conexion = null;
     }
 
-    // Abre la conexión; lanza excepción si la BD no está disponible
+    // Empieza la conexion (lanza excepcion si la BD no esta disponible)
     public void conectar() throws ConexionFallidaException {
         try {
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
@@ -28,7 +28,7 @@ public class ConexionBD {
         }
     }
 
-    // Cierra la conexión si está abierta
+    // Cierra la conexion
     public void cerrar() {
         try {
             if (conexion != null && !conexion.isClosed()) {
