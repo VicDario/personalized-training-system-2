@@ -1,7 +1,9 @@
-package backend;
+package backend.modelo;
 
+// Clase base abstracta para todos los ejercicios del sistema
 public abstract class Ejercicio {
 
+    // Atributos del ejercicio
     private String codigo;
     private String nombre;
     private TipoEjercicio tipo;
@@ -10,6 +12,7 @@ public abstract class Ejercicio {
     private String descripcion;
     private int semanaUltimoUso;
 
+    // Inicializa todos los atributos con valores por defecto
     public Ejercicio() {
         codigo = "";
         nombre = "";
@@ -20,6 +23,7 @@ public abstract class Ejercicio {
         semanaUltimoUso = 0;
     }
 
+    // Getters y setters
     public String getCodigo() { return codigo; }
     public void setCodigo(String codigo) { this.codigo = codigo; }
 
@@ -41,6 +45,7 @@ public abstract class Ejercicio {
     public int getSemanaUltimoUso() { return semanaUltimoUso; }
     public void setSemanaUltimoUso(int semanaUltimoUso) { this.semanaUltimoUso = semanaUltimoUso; }
 
+    // Imprime los datos del ejercicio en consola
     public void mostrarInfo() {
         System.out.println("Código:      " + getCodigo());
         System.out.println("Nombre:      " + getNombre());

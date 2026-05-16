@@ -1,0 +1,7 @@
+// Registra la carpeta lib/ como fuente de librerías externas.
+// El archivo mysql-connector-j-9.7.0.jar permite que Java se conecte a MySQL mediante JDBC.
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+}

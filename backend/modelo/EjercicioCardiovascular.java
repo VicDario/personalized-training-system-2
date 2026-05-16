@@ -1,9 +1,10 @@
-package backend;
+package backend.modelo;
 
+// Ejercicio cardiovascular
 public class EjercicioCardiovascular extends Ejercicio {
 
     public EjercicioCardiovascular() {
-        super();
+        super(); //llama al constructor de la clase padre (Ejercicio)
         setTipo(TipoEjercicio.CARDIOVASCULAR);
     }
 }

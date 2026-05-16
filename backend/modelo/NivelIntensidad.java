@@ -1,8 +1,10 @@
-package backend;
+package backend.modelo;
 
+// Niveles de intensidad disponibles para un ejercicio
 public enum NivelIntensidad {
     BASICO, INTERMEDIO, AVANZADO, ALTO_RENDIMIENTO;
 
+    // Representación legible para la UI
     public String toString() {
         switch (this) {
             case BASICO:           return "Básico";
