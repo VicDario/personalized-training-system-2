@@ -1,23 +1,27 @@
-package backend;
+package backend.modelo;
 
+// Conjunto de ejercicios asignada a un cliente
 public class Rutina {
 
     private String cliente;
     private Ejercicio[] ejercicios;
     private int cantidadEjercicios;
 
+    // Dimensiona el arreglo al máx. de ejercicios permitidos
     public Rutina(int maxEjercicios) {
         cliente = "";
         ejercicios = new Ejercicio[maxEjercicios];
         cantidadEjercicios = 0;
     }
 
+    // Getters y setters
     public String getCliente() { return cliente; }
     public void setCliente(String cliente) { this.cliente = cliente; }
 
     public Ejercicio[] getEjercicios() { return ejercicios; }
     public int getCantidadEjercicios() { return cantidadEjercicios; }
 
+    // Agrega un ejercicio si hay espacio disponible
     public void agregarEjercicio(Ejercicio e) {
         if (cantidadEjercicios < ejercicios.length) {
             ejercicios[cantidadEjercicios] = e;
@@ -25,6 +29,7 @@ public class Rutina {
         }
     }
 
+    // Suma el tiempo estimado de todos los ejercicios de la rutina
     public int getTiempoTotal() {
         int total = 0;
         for (int i = 0; i < cantidadEjercicios; i++) {
@@ -33,6 +38,7 @@ public class Rutina {
         return total;
     }
 
+    // Cuenta cuántos ejercicios corresponden al tipo indicado
     public int contarPorTipo(TipoEjercicio tipo) {
         int count = 0;
         for (int i = 0; i < cantidadEjercicios; i++) {
@@ -41,6 +47,7 @@ public class Rutina {
         return count;
     }
 
+    // Cuenta cuántos ejercicios corresponden al nivel indicado
     public int contarPorNivel(NivelIntensidad nivel) {
         int count = 0;
         for (int i = 0; i < cantidadEjercicios; i++) {
@@ -49,6 +56,7 @@ public class Rutina {
         return count;
     }
 
+    // Imprime el resumen consolidado de la rutina en consola
     public void mostrarInfo() {
         System.out.println("=== Resumen de rutina ===");
         System.out.println("Cliente: " + getCliente());
