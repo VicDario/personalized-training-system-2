@@ -3,15 +3,19 @@ package backend.datos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import io.github.cdimascio.dotenv.Dotenv;
 import backend.excepciones.ConexionFallidaException;
 
 // Gestiona la conexion a la base de datos MySQL
 public class ConexionBD {
 
-    // Credenciales y URL de conexión
-    private static final String URL     = "jdbc:mysql://localhost:3306/fitnesspro";
-    private static final String USUARIO = "root";
-    private static final String CLAVE   = "";
+    // Carga las variables desde el archivo .env (no falla si no existe)
+    private static final Dotenv DOTENV = Dotenv.configure().ignoreIfMissing().load();
+
+    // Credenciales y URL para conectar (cargadas desde .env)
+    private static final String URL     = DOTENV.get("FITNESSPRO_DB_URL", "jdbc:mysql://localhost:3306/fitnesspro");
+    private static final String USUARIO = DOTENV.get("FITNESSPRO_DB_USER", "root");
+    private static final String CLAVE   = DOTENV.get("FITNESSPRO_DB_PASSWORD", "");
 
     private Connection conexion;
 

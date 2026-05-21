@@ -8,12 +8,20 @@ INSTRUCCIONES DE EJECUCIÓN
 REQUISITOS
   - Java JDK 17 o superior.
   - MySQL Server 8.x corriendo en localhost:3306.
-  - El driver mysql-connector-j-9.7.0.jar incluido en la carpeta lib/.
+  - JARs incluidos en la carpeta lib/:
+      mysql-connector-j-9.7.0.jar  (driver JDBC de MySQL)
+      dotenv-java-3.0.2.jar        (lectura del archivo .env)
 
 PREPARACIÓN DE LA BASE DE DATOS
   1. Iniciar MySQL en localhost:3306 con usuario/clave que corresponda.
-     (credenciales configuradas en backend/datos/ConexionBD.java).
-  2. Ejecutar el script ejercicios.sql para crear la base de datos
+  2. Configurar las credenciales en el archivo .env de la raíz del
+     proyecto (usar .env.example como plantilla):
+
+         FITNESSPRO_DB_URL=jdbc:mysql://localhost:3306/fitnesspro
+         FITNESSPRO_DB_USER=root
+         FITNESSPRO_DB_PASSWORD=tu_clave
+
+  3. Ejecutar el script ejercicios.sql para crear la base de datos
      "fitnesspro", la tabla "ejercicios" y la carga inicial de datos:
 
          mysql -u root < ejercicios.sql
@@ -21,7 +29,7 @@ PREPARACIÓN DE LA BASE DE DATOS
 COMPILACIÓN
   Desde la raíz del proyecto (TAREA-2):
 
-      javac -cp "lib/mysql-connector-j-9.7.0.jar" ^
+      javac -cp "lib/*" ^
             AppRutinas.java ^
             backend/modelo/*.java ^
             backend/excepciones/*.java ^
@@ -30,7 +38,7 @@ COMPILACIÓN
             frontend/*.java
 
 EJECUCIÓN
-      java -cp ".;lib/mysql-connector-j-9.7.0.jar" AppRutinas
+      java -cp ".;lib/*" AppRutinas
 
   (En Linux/macOS reemplazar ";" por ":" en el classpath.)
 

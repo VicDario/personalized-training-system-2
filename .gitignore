@@ -1,6 +1,7 @@
 # Archivos de planificación
 PLAN_PROYECTO.md
-leeme.txt
 
 # Compilados Java
 *.class
+#.env
+.env
