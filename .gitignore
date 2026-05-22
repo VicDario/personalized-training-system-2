@@ -5,3 +5,7 @@ PLAN_PROYECTO.md
 *.class
 #.env
 .env
+
+/nbproject/private/
+/dist/
+/build/
