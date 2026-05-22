@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="RutinasFitnessPro" default="default" basedir=".">
+<project name="RutinasFitnessPro" default="run" basedir=".">
     <description>Construye, prueba y ejecuta el proyecto RutinasFitnessPro.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <path id="project.classpath">
+        <fileset dir="lib" includes="*.jar" erroronmissingdir="false"/>
+        <pathelement path="build/classes"/>
+    </path>
+    
+    <target name="run">
+        <echo message="Running AppRutinas..."/>
+        <java classname="AppRutinas" fork="true">
+            <classpath refid="project.classpath"/>
+        </java>
+    </target>
 </project>
