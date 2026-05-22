@@ -5,6 +5,13 @@ Paradigmas de Programación — Tarea 2
 INSTRUCCIONES DE EJECUCIÓN
 ================================================================
 
+PROYECTO NETBEANS
+  - Abrir directamente esta carpeta raíz (tarea2), que contiene
+    build.xml, nbproject/ y src/.
+  - No se necesita instalar Ant por separado para usar el proyecto
+    desde NetBeans.
+  - En NetBeans: Archivo > Abrir proyecto > seleccionar esta carpeta.
+
 REQUISITOS
   - Java JDK 17 o superior.
   - MySQL Server 8.x corriendo en localhost:3306.
@@ -29,18 +36,12 @@ PREPARACIÓN DE LA BASE DE DATOS
 COMPILACIÓN
   Desde la raíz del proyecto (TAREA-2):
 
-      javac -cp "lib/*" ^
-            AppRutinas.java ^
-            backend/modelo/*.java ^
-            backend/excepciones/*.java ^
-            backend/notificacion/*.java ^
-            backend/datos/*.java ^
-            frontend/*.java
+      javac -cp "lib/*" -d build/classes src/AppRutinas.java src/backend/modelo/*.java src/backend/excepciones/*.java src/backend/notificacion/*.java src/backend/datos/*.java src/frontend/*.java
 
 EJECUCIÓN
-      java -cp ".;lib/*" AppRutinas
+      java -cp "build/classes:lib/*" AppRutinas
 
-  (En Linux/macOS reemplazar ";" por ":" en el classpath.)
+  En NetBeans basta con abrir el proyecto y usar Run Project.
 
 ================================================================
 FORMATO DEL ARCHIVO DE EJERCICIOS
