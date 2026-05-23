@@ -57,8 +57,14 @@ datos MySQL "fitnesspro". El esquema es:
                                        AVANZADO | ALTO_RENDIMIENTO
   tiempo_estimado   INT          NN    Duración en minutos.
   descripcion       TEXT               Descripción libre.
+  pulso_recomendado INT                Pulso en bpm (solo cardio).
+  peso              INT                Peso en kg (solo fuerza).
   semana_ultimo_uso INT DEFAULT 0      Semana en que se usó por
                                        última vez (0 = nunca).
+
+La base incluye además las tablas "clientes", "rutinas" y
+"rutina_ejercicios", que guardan los clientes y las rutinas que
+se les generan semana a semana.
 
 VALIDACIONES AL CARGAR
   - codigo, nombre, tipo y nivel son obligatorios; un registro con

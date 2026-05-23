@@ -6,17 +6,22 @@ public class Rutina {
     private String cliente;
     private Ejercicio[] ejercicios;
     private int cantidadEjercicios;
+    private int semana;
 
     // Dimensiona el arreglo al máx. de ejercicios permitidos
     public Rutina(int maxEjercicios) {
         cliente = "";
         ejercicios = new Ejercicio[maxEjercicios];
         cantidadEjercicios = 0;
+        semana = 0;
     }
 
     // Getters y setters
     public String getCliente() { return cliente; }
     public void setCliente(String cliente) { this.cliente = cliente; }
+
+    public int getSemana() { return semana; }
+    public void setSemana(int semana) { this.semana = semana; }
 
     public Ejercicio[] getEjercicios() { return ejercicios; }
     public int getCantidadEjercicios() { return cantidadEjercicios; }
