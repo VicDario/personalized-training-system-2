@@ -9,3 +9,6 @@ PLAN_PROYECTO.md
 /nbproject/private/
 /dist/
 /build/
+
+# macOS
+.DS_Store

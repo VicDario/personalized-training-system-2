@@ -36,7 +36,7 @@ PREPARACIÓN DE LA BASE DE DATOS
 COMPILACIÓN
   Desde la raíz del proyecto (TAREA-2):
 
-      javac -cp "lib/*" -d build/classes src/AppRutinas.java src/backend/modelo/*.java src/backend/excepciones/*.java src/backend/notificacion/*.java src/backend/datos/*.java src/frontend/*.java
+      javac -cp "lib/*" -d build/classes src/AppRutinas.java src/backend/modelo/*.java src/backend/excepciones/*.java src/backend/datos/*.java src/frontend/*.java
 
 EJECUCIÓN
       java -cp "build/classes:lib/*" AppRutinas
@@ -66,50 +66,42 @@ La base incluye además las tablas "clientes", "rutinas" y
 "rutina_ejercicios", que guardan los clientes y las rutinas que
 se les generan semana a semana.
 
-VALIDACIONES AL CARGAR
-  - codigo, nombre, tipo y nivel son obligatorios; un registro con
-    alguno de estos campos vacío provoca InformacionIncompletaException.
-  - tipo debe coincidir exactamente con un valor de TipoEjercicio,
-    y nivel con uno de NivelIntensidad; un valor desconocido genera
-    FormatoInvalidoException.
-  - Si MySQL no responde, se lanza ConexionFallidaException.
-  - Cualquiera de estos fallos se publica al frontend como
-    CARGA_ERROR a través del bus de notificaciones.
-
 ================================================================
-ALCANCES Y SUPUESTOS
+PANTALLAS
 ================================================================
 
-ALCANCES
-  - Los ejercicios se leen desde MySQL al iniciar la aplicación,
-    en un hilo separado para no bloquear la UI de Swing.
-  - El backend está modularizado en cuatro paquetes:
-      backend/modelo        - clases de dominio (Ejercicio,
-                              EjercicioCardiovascular, EjercicioFuerza,
-                              Rutina, TipoEjercicio, NivelIntensidad).
-      backend/datos         - acceso a BD (ConexionBD,
-                              CargadorEjercicios).
-      backend/excepciones   - excepciones propias del sistema.
-      backend/notificacion  - bus de eventos (Notificador,
-                              Suscriptor, EventoSistema).
-  - La comunicación backend - frontend se realiza mediante el
-    patrón Observer: el Notificador singleton publica eventos
-    (CARGA_OK, CARGA_ERROR, RUTINA_GENERADA, RUTINA_ERROR) y
-    VentanaFitnessPro se registra como Suscriptor.
-  - Las notificaciones se despachan en el Event Dispatch Thread
-    (SwingUtilities.invokeLater), de modo que los suscriptores
-    pueden tocar componentes Swing sin riesgos de concurrencia.
-  - La ventana principal muestra estadísticas calculadas en vivo
-    a partir de los ejercicios cargados (total, tiempo total,
-    conteos por tipo y por nivel).
+La aplicación abre en MenuPrincipal, con acceso a dos secciones:
 
-SUPUESTOS
-  - MySQL está disponible localmente con las credenciales
-    fijadas en ConexionBD
-  - El número máximo de suscriptores del bus es 10
-    (MAX_SUSCRIPTORES en Notificador).
-  - El conjunto de tipos de ejercicio es cerrado:
-    CARDIOVASCULAR y FUERZA. Cualquier otro valor en la BD
-    se rechaza como FormatoInvalidoException.
-  - El conjunto de niveles también es cerrado: BASICO,
-    INTERMEDIO, AVANZADO y ALTO_RENDIMIENTO.
+  Ejercicios (VistaEjercicios)
+    - Listado en tabla, crear/editar (FormEjercicio), eliminar,
+      ver detalle y buscar por nivel de intensidad.
+
+  Clientes (VistaClientes)
+    - Alta de clientes (FormCliente) y selección.
+    - Al seleccionar un cliente se abre VistaCliente, donde se
+      generan rutinas (FormRutina: cantidad e intensidad) y se
+      listan las rutinas existentes.
+
+Todas las pantallas son formularios del diseñador de NetBeans
+(pares .java + .form) ubicados en src/frontend.
+
+================================================================
+ARQUITECTURA
+================================================================
+
+  backend/modelo       - clases de dominio (Ejercicio,
+                         EjercicioCardiovascular, EjercicioFuerza,
+                         Cliente, Rutina, TipoEjercicio,
+                         NivelIntensidad).
+  backend/datos        - conexión y acceso a BD (ConexionBD,
+                         EjercicioDAO, ClienteDAO, RutinaDAO).
+  backend/excepciones  - ConexionFallidaException.
+  frontend             - formularios Swing del diseñador.
+
+REGLAS DEL DOMINIO
+  - Tipos cerrados: CARDIOVASCULAR y FUERZA.
+  - Niveles cerrados: BASICO, INTERMEDIO, AVANZADO,
+    ALTO_RENDIMIENTO.
+  - Al generar una rutina no se repiten los ejercicios usados
+    en la rutina de la semana anterior del mismo cliente.
+  - Si MySQL no responde, los DAO lanzan ConexionFallidaException.
