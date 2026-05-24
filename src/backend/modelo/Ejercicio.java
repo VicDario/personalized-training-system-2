@@ -44,15 +44,4 @@ public abstract class Ejercicio {
 
     public int getSemanaUltimoUso() { return semanaUltimoUso; }
     public void setSemanaUltimoUso(int semanaUltimoUso) { this.semanaUltimoUso = semanaUltimoUso; }
-
-    // Imprime los datos del ejercicio en consola
-    public void mostrarInfo() {
-        System.out.println("Código:      " + getCodigo());
-        System.out.println("Nombre:      " + getNombre());
-        System.out.println("Tipo:        " + getTipo());
-        System.out.println("Nivel:       " + getNivel());
-        System.out.println("Tiempo:      " + getTiempoEstimado() + " min");
-        System.out.println("Descripción: " + getDescripcion());
-        System.out.println("Última semana de uso: " + getSemanaUltimoUso());
-    }
 }
