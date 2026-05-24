@@ -77,17 +77,23 @@
         <Property name="text" type="java.lang.String" value="RUT - Semana actual"/>
       </Properties>
     </Component>
+
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="txtRutinas">
+        <Component class="javax.swing.JTable" name="tablaRutinas">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="rows" type="int" value="5"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="4" rowCount="0">
+                <Column editable="false" title="Semana" type="java.lang.Object"/>
+                <Column editable="false" title="Nivel de Intensidad" type="java.lang.Object"/>
+                <Column editable="false" title="Ejercicios Totales" type="java.lang.Object"/>
+                <Column editable="false" title="Total de Tiempo" type="java.lang.Object"/>
+              </Table>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>
@@ -102,7 +108,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVerRutinas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver rutinas"/>
+        <Property name="text" type="java.lang.String" value="Ver rutina"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerRutinasActionPerformed"/>

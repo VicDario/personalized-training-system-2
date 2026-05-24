@@ -19,10 +19,18 @@ public class VistaCliente extends javax.swing.JFrame {
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final RutinaDAO rutinaDAO = new RutinaDAO();
     private Cliente cliente;
+    private List<Rutina> rutinas;
 
     public VistaCliente() {
         initComponents();
         setLocationRelativeTo(null);
+        tablaRutinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    abrirDetalleRutina();
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +40,7 @@ public class VistaCliente extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtRutinas = new javax.swing.JTextArea();
+        tablaRutinas = new javax.swing.JTable();
         btnGenerar = new javax.swing.JButton();
         btnVerRutinas = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
@@ -45,10 +53,21 @@ public class VistaCliente extends javax.swing.JFrame {
 
         lblInfo.setText("RUT - Semana actual");
 
-        txtRutinas.setEditable(false);
-        txtRutinas.setColumns(20);
-        txtRutinas.setRows(5);
-        jScrollPane1.setViewportView(txtRutinas);
+        tablaRutinas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Semana", "Nivel de Intensidad", "Ejercicios Totales", "Total de Tiempo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaRutinas);
 
         btnGenerar.setText("Generar rutina");
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +76,7 @@ public class VistaCliente extends javax.swing.JFrame {
             }
         });
 
-        btnVerRutinas.setText("Ver rutinas");
+        btnVerRutinas.setText("Ver rutina");
         btnVerRutinas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerRutinasActionPerformed(evt);
@@ -121,7 +140,7 @@ public class VistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnVerRutinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRutinasActionPerformed
-        verRutinas();
+        abrirDetalleRutina();
     }//GEN-LAST:event_btnVerRutinasActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -173,28 +192,36 @@ public class VistaCliente extends javax.swing.JFrame {
 
     private void verRutinas() {
         try {
-            List<Rutina> rutinas = rutinaDAO.listarPorCliente(cliente);
-            if (rutinas.isEmpty()) {
-                txtRutinas.setText("Este cliente todavía no tiene rutinas.");
-                return;
-            }
-            StringBuilder texto = new StringBuilder();
+            rutinas = rutinaDAO.listarPorCliente(cliente);
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaRutinas.getModel();
+            modelo.setRowCount(0);
             for (Rutina rutina : rutinas) {
-                texto.append("Semana ").append(rutina.getSemana())
-                     .append("  -  Duración total: ").append(rutina.getTiempoTotal()).append(" min\n");
-                for (int i = 0; i < rutina.getCantidadEjercicios(); i++) {
-                    Ejercicio e = rutina.getEjercicios()[i];
-                    texto.append("   - ").append(e.getNombre())
-                         .append(" (").append(e.getNivel()).append(", ")
-                         .append(e.getTiempoEstimado()).append(" min)\n");
+                String intensidadStr = "N/A";
+                if (rutina.getCantidadEjercicios() > 0 && rutina.getEjercicios()[0] != null) {
+                    intensidadStr = rutina.getEjercicios()[0].getNivel().toString();
                 }
-                texto.append('\n');
+                
+                modelo.addRow(new Object[]{
+                    "Semana " + rutina.getSemana(),
+                    intensidadStr,
+                    rutina.getCantidadEjercicios(),
+                    rutina.getTiempoTotal() + " min"
+                });
             }
-            txtRutinas.setText(texto.toString());
-            txtRutinas.setCaretPosition(0);
         } catch (Exception e) {
             error(e.getMessage());
         }
+    }
+
+    private void abrirDetalleRutina() {
+        int fila = tablaRutinas.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una rutina de la lista.", "Detalle de Rutina", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Rutina rutina = rutinas.get(fila);
+        VistaDetalleRutina dialogo = new VistaDetalleRutina(this, true, rutina);
+        dialogo.setVisible(true);
     }
 
     private void error(String mensaje) {
@@ -208,6 +235,6 @@ public class VistaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea txtRutinas;
+    private javax.swing.JTable tablaRutinas;
     // End of variables declaration//GEN-END:variables
 }
