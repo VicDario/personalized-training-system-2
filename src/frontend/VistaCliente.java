@@ -1,22 +1,14 @@
 package frontend;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JOptionPane;
-import backend.datos.ClienteDAO;
-import backend.datos.EjercicioDAO;
 import backend.datos.RutinaDAO;
 import backend.modelo.Cliente;
-import backend.modelo.Ejercicio;
 import backend.modelo.NivelIntensidad;
 import backend.modelo.Rutina;
 
 public class VistaCliente extends javax.swing.JFrame {
 
-    private final EjercicioDAO ejercicioDAO = new EjercicioDAO();
-    private final ClienteDAO clienteDAO = new ClienteDAO();
     private final RutinaDAO rutinaDAO = new RutinaDAO();
     private Cliente cliente;
     private List<Rutina> rutinas;
@@ -155,37 +147,7 @@ public class VistaCliente extends javax.swing.JFrame {
     }
 
     private void construirRutina(int total, NivelIntensidad nivel) throws Exception {
-        List<Ejercicio> disponibles = ejercicioDAO.buscarPorNivel(nivel);
-        Set<String> usadosSemanaAnterior = new HashSet<>();
-        for (Ejercicio e : rutinaDAO.ejerciciosUltimaRutina(cliente)) {
-            usadosSemanaAnterior.add(e.getCodigo());
-        }
-
-        List<Ejercicio> elegidos = new ArrayList<>();
-        for (Ejercicio e : disponibles) {
-            if (elegidos.size() == total) break;
-            if (usadosSemanaAnterior.contains(e.getCodigo())) continue;
-            elegidos.add(e);
-        }
-
-        if (elegidos.size() < total) {
-            int faltantes = total - elegidos.size();
-            error("No hay ejercicios suficientes con esos criterios.\n"
-                + "Pruebe con otra intensidad o cantidad.\nEjercicios faltantes: " + faltantes);
-            return;
-        }
-
-        Rutina rutina = new Rutina(elegidos.size());
-        rutina.setCliente(cliente.getNombre());
-        rutina.setSemana(cliente.getSemanaActual());
-        for (Ejercicio e : elegidos) {
-            rutina.agregarEjercicio(e);
-        }
-
-        rutinaDAO.crear(cliente, rutina);
-        cliente.incrementarSemana();
-        clienteDAO.incrementarSemana(cliente);
-
+        rutinaDAO.generarYCrear(cliente, total, nivel);
         lblInfo.setText("RUT " + cliente.getRut() + "  -  Semana actual: " + cliente.getSemanaActual());
         verRutinas();
     }

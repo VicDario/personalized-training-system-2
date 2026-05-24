@@ -9,7 +9,10 @@ import java.util.List;
 import backend.modelo.Cliente;
 import backend.modelo.Ejercicio;
 import backend.modelo.Rutina;
+import backend.modelo.NivelIntensidad;
 import backend.excepciones.ConexionFallidaException;
+import java.util.Set;
+import java.util.HashSet;
 
 public class RutinaDAO {
 
@@ -93,5 +96,41 @@ public class RutinaDAO {
             ejercicios.add(EjercicioDAO.construir(rs));
         }
         return ejercicios;
+    }
+
+    public void generarYCrear(Cliente cliente, int total, NivelIntensidad nivel) throws Exception {
+        EjercicioDAO ejercicioDAO = new EjercicioDAO();
+        List<Ejercicio> disponibles = ejercicioDAO.buscarPorNivel(nivel);
+        
+        Set<String> usadosSemanaAnterior = new HashSet<>();
+        for (Ejercicio e : ejerciciosUltimaRutina(cliente)) {
+            usadosSemanaAnterior.add(e.getCodigo());
+        }
+
+        List<Ejercicio> elegidos = new ArrayList<>();
+        for (Ejercicio e : disponibles) {
+            if (elegidos.size() == total) break;
+            if (usadosSemanaAnterior.contains(e.getCodigo())) continue;
+            elegidos.add(e);
+        }
+
+        if (elegidos.size() < total) {
+            int faltantes = total - elegidos.size();
+            throw new IllegalArgumentException("No hay ejercicios suficientes con esos criterios.\n"
+                + "Pruebe con otra intensidad o cantidad.\nEjercicios faltantes: " + faltantes);
+        }
+
+        Rutina rutina = new Rutina(elegidos.size());
+        rutina.setCliente(cliente.getNombre());
+        rutina.setSemana(cliente.getSemanaActual());
+        for (Ejercicio e : elegidos) {
+            rutina.agregarEjercicio(e);
+        }
+
+        crear(cliente, rutina);
+        cliente.incrementarSemana();
+        
+        ClienteDAO clienteDAO = new ClienteDAO();
+        clienteDAO.incrementarSemana(cliente);
     }
 }
