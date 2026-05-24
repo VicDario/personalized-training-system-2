@@ -155,7 +155,6 @@ public class EjercicioDAO {
         e.setNivel(NivelIntensidad.valueOf(rs.getString("nivel")));
         e.setTiempoEstimado(rs.getInt("tiempo_estimado"));
         e.setDescripcion(rs.getString("descripcion"));
-        e.setSemanaUltimoUso(rs.getInt("semana_ultimo_uso"));
         return e;
     }
 }

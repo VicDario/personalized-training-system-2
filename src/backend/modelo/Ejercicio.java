@@ -20,7 +20,6 @@ public abstract class Ejercicio {
         nivel = null;
         tiempoEstimado = 0;
         descripcion = "";
-        semanaUltimoUso = 0;
     }
 
     // Getters y setters
@@ -41,7 +40,4 @@ public abstract class Ejercicio {
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public int getSemanaUltimoUso() { return semanaUltimoUso; }
-    public void setSemanaUltimoUso(int semanaUltimoUso) { this.semanaUltimoUso = semanaUltimoUso; }
 }
