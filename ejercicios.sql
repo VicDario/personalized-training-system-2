@@ -14,8 +14,7 @@ CREATE TABLE ejercicios (
     tiempo_estimado   INT          NOT NULL,
     descripcion       TEXT,
     pulso_recomendado INT,
-    peso              INT,
-    semana_ultimo_uso INT DEFAULT 0
+    peso              INT
 );
 
 CREATE TABLE clientes (
